@@ -31,11 +31,18 @@ variable "vpc_name" {
   description = "VPC network & subnet name"
 }
 
-
 ###ssh vars
 
 variable "vms_ssh_root_key" {
   type        = string
   default     = "<your_ssh_ed25519_key>"
   description = "ssh-keygen -t ed25519"
+}
+
+
+### project name
+
+variable "project" {
+  type        = string
+  default     = "netology"
 }
