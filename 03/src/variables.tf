@@ -30,3 +30,15 @@ variable "vpc_name" {
   default     = "develop"
   description = "VPC network&subnet name"
 }
+
+#variable "vm_params" {
+#  type        = list(object({ vm_name=string, cpu=number, ram=number, disk=number }))
+#}
+
+###ssh vars
+
+variable "vms_ssh_root_key" {
+  type        = string
+  default     = "<your_ssh_ed25519_key>"
+  description = "ssh-keygen -t ed25519"
+}
