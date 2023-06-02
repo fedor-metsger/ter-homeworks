@@ -429,4 +429,31 @@
    Plan: 7 to add, 0 to change, 0 to destroy.
    ```
    
+6. **Разверните у себя локально vault, используя docker-compose.yml в проекте.**
+   
+   **Для входа в web интерфейс и авторизации terraform в vault используйте токен "education"**
+   **Создайте новый секрет по пути http://127.0.0.1:8200/ui/vault/secrets/secret/create   
+   Path: example
+   secret data key: test secret data value: congrats!**
+   
+   **Считайте данный секрет с помощью terraform и выведите его в output**
+   
+   Привожу модуль [vault]()
+   
+   Привожу вывод команды:
+   ```
+   fedor@fedor-Z68P-DS3:~/CODE/Netology/DevOps/ter-homeworks/04/src$ terraform output
+   vault_secret = tomap({
+     "test" = "congrats!"
+   })
+   fedor@fedor-Z68P-DS3:~/CODE/Netology/DevOps/ter-homeworks/04/src$
+   ```
+   
+   **Попробуйте самостоятельно разобраться в документации и записать новый секрет в vault с помощью terraform.**
+   
+   Привожу скриншот из консоли **Vault**:
+   
+   ![](https://github.com/fedor-metsger/devops-netology/blob/main/Capture31.png)
+   
+   
    
