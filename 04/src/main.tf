@@ -1,3 +1,4 @@
+
 /*
 module "vpc" {
   source    = "./vpc"
@@ -41,6 +42,19 @@ module "test-vm" {
     user-data          = data.template_file.userdata.rendered
     serial-port-enable = 1
   }
+}
+
+module "vault_secret" {
+  source = "./vault"
+  new_secret = <<EOT
+{
+  "pizza": "4cheeses"
+}
+EOT
+}
+
+output "vault_secret" {
+  value = module.vault_secret.vault_example
 }
 
 data template_file "userdata" {
