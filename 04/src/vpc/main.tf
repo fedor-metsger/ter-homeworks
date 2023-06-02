@@ -13,8 +13,10 @@ resource "yandex_vpc_network" "net_name" {
 }
 
 resource "yandex_vpc_subnet" "subnet_name" {
-  name           = join("-", [var.env_name, var.zone])
-  zone           = var.zone
+  count = length(var.subnets)
+
+  name           = join("-", [var.env_name, var.subnets[count.index].zone])
+  zone           = var.subnets[count.index].zone
   network_id     = yandex_vpc_network.net_name.id
-  v4_cidr_blocks = [var.cidr]
+  v4_cidr_blocks = [var.subnets[count.index].cidr]
 }
