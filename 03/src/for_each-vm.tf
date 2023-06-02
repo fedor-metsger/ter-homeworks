@@ -22,7 +22,7 @@ resource "yandex_compute_instance" "for-each" {
   }
   network_interface {
     subnet_id = yandex_vpc_subnet.develop.id
-    nat       = true
+    nat       = false
   }
 
   metadata = {

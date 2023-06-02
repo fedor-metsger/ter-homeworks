@@ -32,7 +32,7 @@ resource "yandex_compute_instance" "disk-vm" {
   }
   network_interface {
     subnet_id = yandex_vpc_subnet.develop.id
-    nat       = true
+    nat       = false
   }
   metadata = {
     serial-port-enable = 1
