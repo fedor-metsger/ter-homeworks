@@ -237,3 +237,223 @@
    Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
    fedor@fedor-Z68P-DS3:~/CODE/Netology/DevOps/ter-homeworks/04/src$
    ```
+
+4. **Измените модуль vpc так, чтобы он мог создать подсети во всех зонах доступности, переданных в переменной типа list(object) при вызове модуля.**
+
+   **Предоставьте код, план выполнения, результат из консоли YC.**
+   
+   Привожу код в [отдельной ветке](https://github.com/fedor-metsger/ter-homeworks/tree/terraform-04-add/04/src).
+   
+   Привожу скриншоты с YC:
+   
+   ![](https://github.com/fedor-metsger/devops-netology/blob/main/Capture29.png)
+   
+   ![](https://github.com/fedor-metsger/devops-netology/blob/main/Capture30.png)
+   
+   План выполнения:
+   ```
+   module.test-vm.data.yandex_compute_image.my_image: Reading...
+   data.template_file.userdata: Reading...
+   data.template_file.userdata: Read complete after 0s [id=a188abb0daeef04def27c9164c98402a79667f6164cd2816a7b9664d4afba9a1]
+   module.test-vm.data.yandex_compute_image.my_image: Read complete after 3s [id=fd8lape4adm5melne14m]
+
+   Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+     + create
+
+   Terraform will perform the following actions:
+
+     # module.test-vm.yandex_compute_instance.vm[0] will be created
+         + resource "yandex_compute_instance" "vm" {
+         + allow_stopping_for_update = true
+         + created_at                = (known after apply)
+         + description               = "TODO: description; {{terraform managed}}"
+         + folder_id                 = (known after apply)
+         + fqdn                      = (known after apply)
+         + gpu_cluster_id            = (known after apply)
+         + hostname                  = "develop-web-0"
+         + id                        = (known after apply)
+         + labels                    = {
+             + "env"     = "develop"
+             + "project" = "undefined"
+           }
+         + metadata                  = {
+             + "serial-port-enable" = "1"
+             + "user-data"          = <<-EOT
+                   #cloud-config
+                   users:
+                     - name: ubuntu
+                       groups: sudo
+                       shell: /bin/bash
+                       sudo: ['ALL=(ALL) NOPASSWD:ALL']
+                       ssh-authorized-keys:
+                            - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDmAQm4S2bJ8BP+Cj+9JNcAQcGhhieeYwcxglNJN7+zDvZhg/7PsxcdYWKcwuQEP6Eu7LylGyKIoMMM1nJ/xojJx6p4mkMbNZI239Bkju5+pej0OJSCPTZjMTsOp0RkGmeMuvFEE89MsGCU1hf6AZwBR5Jtn4SrHS5GAXwxgNA6zK/BcI7fhNflhMIcfvBYq1+y/s5f6EniUTMtijIW3aWVr4rdWKsznlTkQpPlI2Rr6Qzy5OsoS2gk0+rFD2V7rzVe9Djplp5taxqVY1oA0MpoqM10gQoxaY12GIK0WElMMjFzeysV21IdI345015tTmXxS2EVryUrWsS4BryhbnansDUgihI1Sr5kKeEeK9d3Wqi6uFDcDwizB3Cne7dr0RpT+7gpbvTMyM6AB1ON3MrE28GDUNjTlaEgRyRvYynIx/bEVIO+XvBDUt2oQdG7dbGPcWppfjkAkJsVcfSRamwSEoD0c5BmJAcp9ez70rUME5n3WUhuWrpbcehY1jMv58M= fedor@DESKTOP-FEKCCDN
+                
+                   package_update: true
+                   package_upgrade: false
+                   packages:
+                     - vim
+                     - nginx
+               EOT
+           }
+         + name                      = "develop-web-0"
+         + network_acceleration_type = "standard"
+         + platform_id               = "standard-v1"
+         + service_account_id        = (known after apply)
+         + status                    = (known after apply)
+         + zone                      = "ru-central1-a"
+
+         + boot_disk {
+             + auto_delete = true
+             + device_name = (known after apply)
+             + disk_id     = (known after apply)
+             + mode        = (known after apply)
+   
+             + initialize_params {
+                 + block_size  = (known after apply)
+                 + description = (known after apply)
+                 + image_id    = "fd8lape4adm5melne14m"
+                 + name        = (known after apply)
+                 + size        = 10
+                 + snapshot_id = (known after apply)
+                 + type        = "network-hdd"
+               }
+           }
+   
+         + network_interface {
+             + index              = (known after apply)
+             + ip_address         = (known after apply)
+             + ipv4               = true
+             + ipv6               = (known after apply)
+             + ipv6_address       = (known after apply)
+             + mac_address        = (known after apply)
+             + nat                = true
+             + nat_ip_address     = (known after apply)
+             + nat_ip_version     = (known after apply)
+             + security_group_ids = (known after apply)
+             + subnet_id          = (known after apply)
+           }
+
+         + resources {
+             + core_fraction = 5
+             + cores         = 2
+             + memory        = 1
+           }
+
+         + scheduling_policy {
+             + preemptible = true
+           }
+       }
+
+     # module.vpc_dev.yandex_vpc_network.net_name will be created
+     + resource "yandex_vpc_network" "net_name" {
+         + created_at                = (known after apply)
+         + default_security_group_id = (known after apply)
+         + folder_id                 = (known after apply)
+         + id                        = (known after apply)
+         + labels                    = (known after apply)
+         + name                      = "develop"
+         + subnet_ids                = (known after apply)
+       }
+
+     # module.vpc_dev.yandex_vpc_subnet.subnet_name[0] will be created
+     + resource "yandex_vpc_subnet" "subnet_name" {
+         + created_at     = (known after apply)
+         + folder_id      = (known after apply)
+         + id             = (known after apply)
+         + labels         = (known after apply)
+         + name           = "develop-ru-central1-a"
+         + network_id     = (known after apply)
+         + v4_cidr_blocks = [
+             + "10.0.1.0/24",
+           ]
+         + v6_cidr_blocks = (known after apply)
+         + zone           = "ru-central1-a"
+       }
+
+     # module.vpc_prod.yandex_vpc_network.net_name will be created
+     + resource "yandex_vpc_network" "net_name" {
+         + created_at                = (known after apply)
+         + default_security_group_id = (known after apply)
+         + folder_id                 = (known after apply)
+         + id                        = (known after apply)
+         + labels                    = (known after apply)
+         + name                      = "production"
+         + subnet_ids                = (known after apply)
+       }
+
+     # module.vpc_prod.yandex_vpc_subnet.subnet_name[0] will be created
+     + resource "yandex_vpc_subnet" "subnet_name" {
+         + created_at     = (known after apply)
+         + folder_id      = (known after apply)
+         + id             = (known after apply)
+         + labels         = (known after apply)
+         + name           = "production-ru-central1-a"
+         + network_id     = (known after apply)
+         + v4_cidr_blocks = [
+             + "10.0.1.0/24",
+           ]
+         + v6_cidr_blocks = (known after apply)
+         + zone           = "ru-central1-a"
+     }
+
+     # module.vpc_prod.yandex_vpc_subnet.subnet_name[1] will be created
+       + resource "yandex_vpc_subnet" "subnet_name" {
+       + created_at     = (known after apply)
+       + folder_id      = (known after apply)
+       + id             = (known after apply)
+       + labels         = (known after apply)
+       + name           = "production-ru-central1-b"
+       + network_id     = (known after apply)
+       + v4_cidr_blocks = [
+           + "10.0.2.0/24",
+         ]
+       + v6_cidr_blocks = (known after apply)
+       + zone           = "ru-central1-b"
+     }
+
+     # module.vpc_prod.yandex_vpc_subnet.subnet_name[2] will be created
+     + resource "yandex_vpc_subnet" "subnet_name" {
+         + created_at     = (known after apply)
+         + folder_id      = (known after apply)
+         + id             = (known after apply)
+         + labels         = (known after apply)
+         + name           = "production-ru-central1-c"
+         + network_id     = (known after apply)
+         + v4_cidr_blocks = [
+             + "10.0.3.0/24",
+           ]
+         + v6_cidr_blocks = (known after apply)
+         + zone           = "ru-central1-c"
+     }
+
+   Plan: 7 to add, 0 to change, 0 to destroy.
+   ```
+   
+6. **Разверните у себя локально vault, используя docker-compose.yml в проекте.**
+   
+   **Для входа в web интерфейс и авторизации terraform в vault используйте токен "education"**
+   **Создайте новый секрет по пути http://127.0.0.1:8200/ui/vault/secrets/secret/create   
+   Path: example
+   secret data key: test secret data value: congrats!**
+   
+   **Считайте данный секрет с помощью terraform и выведите его в output**
+   
+   Привожу модуль [vault](https://github.com/fedor-metsger/ter-homeworks/tree/terraform-04-add/04/src/vault)
+   
+   Привожу вывод команды:
+   ```
+   fedor@fedor-Z68P-DS3:~/CODE/Netology/DevOps/ter-homeworks/04/src$ terraform output
+   vault_secret = tomap({
+     "test" = "congrats!"
+   })
+   fedor@fedor-Z68P-DS3:~/CODE/Netology/DevOps/ter-homeworks/04/src$
+   ```
+   
+   **Попробуйте самостоятельно разобраться в документации и записать новый секрет в vault с помощью terraform.**
+   
+   Привожу скриншот из консоли **Vault**:
+   
+   ![](https://github.com/fedor-metsger/devops-netology/blob/main/Capture31.png)
+   
+   
+   
