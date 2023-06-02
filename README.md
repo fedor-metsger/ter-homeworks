@@ -438,7 +438,7 @@
    
    **Считайте данный секрет с помощью terraform и выведите его в output**
    
-   Привожу модуль [vault]()
+   Привожу модуль [vault](https://github.com/fedor-metsger/ter-homeworks/tree/terraform-04-add/04/src/vault)
    
    Привожу вывод команды:
    ```
