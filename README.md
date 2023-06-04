@@ -26,12 +26,149 @@
    **Предоставьте скриншот подключения к консоли и вывод команды** `sudo nginx -t`
    
    ```
-   fedor@fedor-Z68P-DS3:~/CODE/Netology/DevOps/ter-homeworks/04/src$ ssh ubuntu@51.250.73.175
-   The authenticity of host '51.250.73.175 (51.250.73.175)' can't be established.
-   ED25519 key fingerprint is SHA256:GkoDpnz53dS4GfPysge0t6XFFTPE+iEdV1CAuxf3xYc.
+   fedor@fedor-Z68P-DS3:~/CODE/Netology/DevOps/ter-homeworks/04/src$ terraform apply
+   data.template_file.userdata: Reading...
+   data.template_file.userdata: Read complete after 0s [id=a188abb0daeef04def27c9164c98402a79667f6164cd2816a7b9664d4afba9a1]
+   module.test-vm.data.yandex_compute_image.my_image: Reading...
+   module.test-vm.data.yandex_compute_image.my_image: Read complete after 2s [id=fd8lape4adm5melne14m]
+
+   Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+     + create
+
+   Terraform will perform the following actions:
+
+     # module.test-vm.yandex_compute_instance.vm[0] will be created
+     + resource "yandex_compute_instance" "vm" {
+         + allow_stopping_for_update = true
+         + created_at                = (known after apply)
+         + description               = "TODO: description; {{terraform managed}}"
+         + folder_id                 = (known after apply)
+         + fqdn                      = (known after apply)
+         + gpu_cluster_id            = (known after apply)
+         + hostname                  = "develop-web-0"
+         + id                        = (known after apply)
+         + labels                    = {
+             + "env"     = "develop"
+             + "project" = "undefined"
+           }
+         + metadata                  = {
+             + "serial-port-enable" = "1"
+             + "user-data"          = <<-EOT
+                   #cloud-config
+                   users:
+                     - name: ubuntu
+                       groups: sudo
+                       shell: /bin/bash
+                       sudo: ['ALL=(ALL) NOPASSWD:ALL']
+                       ssh-authorized-keys:
+                            - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDmAQm4S2bJ8BP+Cj+9JNcAQcGhhieeYwcxglNJN7+zDvZhg/7PsxcdYWKcwuQEP6Eu7LylGyKIoMMM1nJ/xojJx6p4mkMbNZI239Bkju5+pej0OJSCPTZjMTsOp0RkGmeMuvFEE89MsGCU1hf6AZwBR5Jtn4SrHS5GAXwxgNA6zK/BcI7fhNflhMIcfvBYq1+y/s5f6EniUTMtijIW3aWVr4rdWKsznlTkQpPlI2Rr6Qzy5OsoS2gk0+rFD2V7rzVe9Djplp5taxqVY1oA0MpoqM10gQoxaY12GIK0WElMMjFzeysV21IdI345015tTmXxS2EVryUrWsS4BryhbnansDUgihI1Sr5kKeEeK9d3Wqi6uFDcDwizB3Cne7dr0RpT+7gpbvTMyM6AB1ON3MrE28GDUNjTlaEgRyRvYynIx/bEVIO+XvBDUt2oQdG7dbGPcWppfjkAkJsVcfSRamwSEoD0c5BmJAcp9ez70rUME5n3WUhuWrpbcehY1jMv58M= fedor@DESKTOP-FEKCCDN
+                
+                   package_update: true
+                   package_upgrade: false
+                   packages:
+                     - vim
+                     - nginx
+               EOT
+           }
+         + name                      = "develop-web-0"
+         + network_acceleration_type = "standard"
+         + platform_id               = "standard-v1"
+         + service_account_id        = (known after apply)
+         + status                    = (known after apply)
+         + zone                      = "ru-central1-a"
+
+         + boot_disk {
+             + auto_delete = true
+             + device_name = (known after apply)
+             + disk_id     = (known after apply)
+             + mode        = (known after apply)
+   
+             + initialize_params {
+                 + block_size  = (known after apply)
+                 + description = (known after apply)
+                 + image_id    = "fd8lape4adm5melne14m"
+                 + name        = (known after apply)
+                 + size        = 10
+                 + snapshot_id = (known after apply)
+                 + type        = "network-hdd"
+               }
+           }
+
+         + network_interface {
+             + index              = (known after apply)
+             + ip_address         = (known after apply)
+             + ipv4               = true
+             + ipv6               = (known after apply)
+             + ipv6_address       = (known after apply)
+             + mac_address        = (known after apply)
+             + nat                = true
+             + nat_ip_address     = (known after apply)
+             + nat_ip_version     = (known after apply)
+             + security_group_ids = (known after apply)
+             + subnet_id          = (known after apply)
+           }
+
+         + resources {
+             + core_fraction = 5
+             + cores         = 2
+             + memory        = 1
+           }
+
+         + scheduling_policy {
+             + preemptible = true
+           }
+       }
+
+     # module.vpc.yandex_vpc_network.net_name will be created
+     + resource "yandex_vpc_network" "net_name" {
+         + created_at                = (known after apply)
+         + default_security_group_id = (known after apply)
+         + folder_id                 = (known after apply)
+         + id                        = (known after apply)
+         + labels                    = (known after apply)
+         + name                      = "develop"
+         + subnet_ids                = (known after apply)
+       }
+
+     # module.vpc.yandex_vpc_subnet.subnet_name will be created
+     + resource "yandex_vpc_subnet" "subnet_name" {
+         + created_at     = (known after apply)
+         + folder_id      = (known after apply)
+         + id             = (known after apply)
+         + labels         = (known after apply)
+         + name           = "develop-ru-central1-a"
+         + network_id     = (known after apply)
+         + v4_cidr_blocks = [
+             + "10.0.1.0/24",
+           ]
+         + v6_cidr_blocks = (known after apply)
+         + zone           = "ru-central1-a"
+       }
+
+   Plan: 3 to add, 0 to change, 0 to destroy.
+
+   Do you want to perform these actions?
+     Terraform will perform the actions described above.
+     Only 'yes' will be accepted to approve.
+
+     Enter a value: yes
+
+   module.vpc.yandex_vpc_network.net_name: Creating...
+   module.vpc.yandex_vpc_network.net_name: Creation complete after 3s [id=enpohvkv18dg9lmtnv2s]
+   module.vpc.yandex_vpc_subnet.subnet_name: Creating...
+   module.vpc.yandex_vpc_subnet.subnet_name: Creation complete after 1s [id=e9bdeanjj3k4371rqqqh]
+   module.test-vm.yandex_compute_instance.vm[0]: Creating...
+   module.test-vm.yandex_compute_instance.vm[0]: Still creating... [10s elapsed]
+   module.test-vm.yandex_compute_instance.vm[0]: Still creating... [20s elapsed]
+   module.test-vm.yandex_compute_instance.vm[0]: Creation complete after 29s [id=fhmadg9hvm6vh307lsjb]
+
+   Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+   fedor@fedor-Z68P-DS3:~/CODE/Netology/DevOps/ter-homeworks/04/src$ ssh ubuntu@51.250.82.170
+   The authenticity of host '51.250.82.170 (51.250.82.170)' can't be established.
+   ED25519 key fingerprint is SHA256:mKEsdWm47n83L178dXdwNxRDYEbKpq/2hsJ341j55vY.
    This key is not known by any other names
    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-   Warning: Permanently added '51.250.73.175' (ED25519) to the list of known hosts.
+   Warning: Permanently added '51.250.82.170' (ED25519) to the list of known hosts.
    Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.4.0-149-generic x86_64)
 
     * Documentation:  https://help.ubuntu.com
@@ -57,6 +194,15 @@
    sudo apt install nginx-full    # version 1.18.0-0ubuntu1.4
    sudo apt install nginx-light   # version 1.18.0-0ubuntu1.4
 
+   ubuntu@develop-web-0:~$ nginx -t
+   nginx: [alert] could not open error log file: open() "/var/log/nginx/error.log" failed (13: Permission denied)
+   2023/06/04 10:41:01 [warn] 1686#1686: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /etc/nginx/nginx.conf:1
+   nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+   2023/06/04 10:41:01 [emerg] 1686#1686: open() "/run/nginx.pid" failed (13: Permission denied)
+   nginx: configuration file /etc/nginx/nginx.conf test failed
+   ubuntu@develop-web-0:~$ sudo nginx -t
+   nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+   nginx: configuration file /etc/nginx/nginx.conf test is successful
    ubuntu@develop-web-0:~$
    ```
 
