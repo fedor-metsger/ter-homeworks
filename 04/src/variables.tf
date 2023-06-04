@@ -59,7 +59,7 @@ variable "lowercase_string" {
 }
 
 variable "in_the_end_there_can_be_only_one" {
-    description="Who is better Connor or Duncan?"
+    description = "Who is better Connor or Duncan?"
     type = object({
         Dunkan = optional(bool)
         Connor = optional(bool)
