@@ -59,9 +59,19 @@
 
    Ссылка на [Pull request](https://github.com/fedor-metsger/ter-homeworks/pull/1).
    
+   В PR есть один конфликт в одном файле! Но он больше похож на какой то глюк гитхаба, так как выглядит выродженным,
+   или сделанным на пустом месте. Вернее пустое место конфликтует с удалением строк (вследствие чего, собственно,
+   и образовалось пустое место). Прилагаю скрин:
+   
+   ![](https://github.com/fedor-metsger/devops-netology/blob/main/Screenshot%20at%202023-06-04%2016-50-21.png)
+   
+   Конфликт я разрешил.
+   
 4. **Напишите переменные с валидацией и протестируйте их, заполнив default верными и неверными значениями. Предоставьте скриншоты проверок:**
 
    **type=string, description="ip-адрес", проверка что значение переменной содержит верный IP-адрес с помощью функций cidrhost() или regex(). Тесты: "192.168.0.1" и "1920.1680.0.1"**
+   
+   Переменные описаны [здесь](https://github.com/fedor-metsger/ter-homeworks/blob/5dc4716c536fc23c134d9d1502c4fdd58529f0ac/04/src/variables.tf#L23).
    
    Прилагаю скриншот ошибки:
    
@@ -72,4 +82,17 @@
    Прилагаю скриншот ошибки:
    
    ![](https://github.com/fedor-metsger/devops-netology/blob/main/Screenshot%20at%202023-06-03%2021-55-31.png)
+   
+5. **Напишите переменные с валидацией:**
+
+   **type=string, description="любая строка", проверка что строка не содержит в себе символов верхнего регистра**
+   
+   **type=object, проверка что введено только одно из опциональных значений по примеру:**
+   
+   Переменные описаны [здесь](https://github.com/fedor-metsger/ter-homeworks/blob/5dc4716c536fc23c134d9d1502c4fdd58529f0ac/04/src/variables.tf#L49).
+   
+   Результат проверки:
+   
+   ![](https://github.com/fedor-metsger/devops-netology/blob/main/Screenshot%20at%202023-06-04%2017-21-48.png)
+
    
