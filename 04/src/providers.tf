@@ -3,21 +3,25 @@ terraform {
   required_providers {
     yandex = {
       source = "yandex-cloud/yandex"
+      version = ">=0.92"
+    }
+    template = {
+      version = ">=0.01"
     }
   }
   required_version = ">=0.13"
 
-  backend "s3" {
-    endpoint   = "storage.yandexcloud.net"
-    bucket     = "bucket-for-terraform"
-    region     = "ru-central1"
-    key        = "terraform-tfstate"
-
-    skip_region_validation      = true
-    skip_credentials_validation = true
-    dynamodb_endpoint = "https://docapi.serverless.yandexcloud.net/ru-central1/b1ge8m51046pv654acbv/etnoj5a7tvqiqh4j1bnj"
-    dynamodb_table = "tfstate-lock"
-  }
+#  backend "s3" {
+#    endpoint   = "storage.yandexcloud.net"
+#    bucket     = "bucket-for-terraform"
+#    region     = "ru-central1"
+#    key        = "terraform-tfstate"
+#
+#    skip_region_validation      = true
+#    skip_credentials_validation = true
+#    dynamodb_endpoint = "https://docapi.serverless.yandexcloud.net/ru-central1/b1ge8m51046pv654acbv/etnoj5a7tvqiqh4j1bnj"
+#    dynamodb_table = "tfstate-lock"
+#  }
 }
 
 

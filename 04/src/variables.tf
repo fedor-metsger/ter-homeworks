@@ -19,39 +19,6 @@ variable "default_zone" {
   default     = "ru-central1-a"
   description = "https://cloud.yandex.ru/docs/overview/concepts/geo-scope"
 }
-variable "default_cidr" {
-  type        = list(string)
-  default     = ["10.0.1.0/24"]
-  description = "https://cloud.yandex.ru/docs/vpc/operations/subnet-create"
-}
-
-variable "vpc_name" {
-  type        = string
-  default     = "develop"
-  description = "VPC network&subnet name"
-}
-
-###common vars
-
-variable "vms_ssh_root_key" {
-  type        = string
-  default     = "your_ssh_ed25519_key"
-  description = "ssh-keygen -t ed25519"
-}
-
-###example vm_web var
-variable "vm_web_name" {
-  type        = string
-  default     = "netology-develop-platform-web"
-  description = "example vm_web_ prefix"
-}
-
-###example vm_db var
-variable "vm_db_name" {
-  type        = string
-  default     = "netology-develop-platform-db"
-  description = "example vm_db_ prefix"
-}
 
 variable "ipv4_addr" {
   type    = string
@@ -67,8 +34,8 @@ variable "ipv4_addr" {
 
 variable "ipv4_addr_list" {
   type    = list(string)
-#  default = ["192.168.0.1", "1.1.1.1", "127.0.0.1"]
-  default = ["192.168.0.1", "1.1.1.1", "1270.0.0.1"]
+  default = ["192.168.0.1", "1.1.1.1", "127.0.0.1"]
+#  default = ["192.168.0.1", "1.1.1.1", "1270.0.0.1"]
   description = "список ip-адресов"
 
   validation {
@@ -77,4 +44,38 @@ variable "ipv4_addr_list" {
     ])
     error_message = "All elements must be valid IPv4 addresses."
   }
+}
+
+variable "lowercase_string" {
+  type        = string
+  description = "любая строка"
+#  default     = "asdfjhasdfj`1234n./,/"
+  default     = "asdfjXhasdfj`1234n./,/"
+
+  validation {
+    condition     = var.lowercase_string == lower(var.lowercase_string)
+    error_message = "String contains uppercase letters."
+  }
+}
+
+variable "in_the_end_there_can_be_only_one" {
+    description = "Who is better Connor or Duncan?"
+    type = object({
+        Dunkan = optional(bool)
+        Connor = optional(bool)
+    })
+
+#    default = {
+#        Dunkan = true
+#        Connor = false
+#    }
+    default = {
+        Dunkan = true
+        Connor = true
+    }
+
+    validation {
+        error_message = "There can be only one MacLeod"
+        condition     = !(var.in_the_end_there_can_be_only_one.Dunkan && var.in_the_end_there_can_be_only_one.Connor)
+    }
 }
